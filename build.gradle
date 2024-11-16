@@ -1,0 +1,57 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'net.serenity-bdd.aggregator'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+buildscript {
+    ext {
+        serenityCoreVersion = "2.4.4"
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("net.serenity-bdd:serenity-gradle-plugin:$serenityCoreVersion")
+    }
+}
+
+ext {
+    serenityCoreVersion = "2.4.4"
+    serenityCucumberVersion = "2.4.34"
+    jUnitVersion = "4.13.2" // Compatible con Serenity 2.4.4
+    assertJVersion = "3.20.2" // Compatible con JUnit 5.8.2
+    slf4JVersion = "1.7.30" // Compatible con Serenity y Selenium
+    lombokVersion = "1.18.24" // Compatible con las versiones de Java actuales
+}
+
+dependencies {
+    // Serenity Core y Screenplay
+    implementation "net.serenity-bdd:serenity-core:${serenityCoreVersion}"
+    implementation "net.serenity-bdd:serenity-junit:${serenityCoreVersion}"
+    implementation "net.serenity-bdd:serenity-cucumber6:${serenityCucumberVersion}"
+    implementation "net.serenity-bdd:serenity-screenplay:${serenityCoreVersion}"
+    implementation "net.serenity-bdd:serenity-screenplay-webdriver:${serenityCoreVersion}"
+    implementation "net.serenity-bdd:serenity-ensure:${serenityCoreVersion}"
+    testImplementation "junit:junit:${jUnitVersion}"
+
+    // AssertJ para aserciones avanzadas
+    testImplementation "org.assertj:assertj-core:${assertJVersion}"
+
+    // SLF4J para logging
+    implementation "org.slf4j:slf4j-simple:${slf4JVersion}"
+
+    // WebDriverManager para controladores automáticos
+//    implementation 'io.github.bonigarcia:webdrivermanager:5.5.3'
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+}
